@@ -2,13 +2,11 @@
 // - KahwaWaiterMobile: menu grid → floating cart fab → bottom sheet cart + past orders
 // - KahwaBoufiyaMobile: vertical stack of order cards
 
-// Palette follows the viewer's saved theme (theme-control.js) via FAST_THEMES;
-// the danger/warn accents are constant across themes.
-const __mobThemeKey = (window.KahwaTheme && window.KahwaTheme.get()) || 'sage';
+// Single fixed sage palette (via FAST_THEMES); danger/warn accents are constant.
 const MOB_T = Object.assign(
   { bg:'#f4f4f0', surface:'#fff', ink:'#1a1a14', inkSoft:'#7a7a6a',
     accent:'#3a6a48', accentInk:'#fff', rule:'#e2e2dc', pillBg:'#eaeae2' },
-  (window.FAST_THEMES && (window.FAST_THEMES[__mobThemeKey] || window.FAST_THEMES.sage)) || {},
+  (window.FAST_THEMES && window.FAST_THEMES.sage) || {},
   { danger:'#b03a20', warn:'#a87320' },
 );
 const fontStack = '"Tajawal", system-ui, sans-serif';

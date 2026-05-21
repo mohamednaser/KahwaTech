@@ -9,8 +9,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-<script>window.__KAHWA_NO_THEME_WIDGET = true;</script>
-<script src="theme-control.js"></script>
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; width: 100%; height: 100%;
@@ -38,7 +36,7 @@
 <script type="text/babel" data-presets="react">
   function App() {
     const portrait = window.useIsPortrait();
-    const theme = (window.KahwaTheme && window.KahwaTheme.get()) || 'sage';
+    const theme = 'sage';
     const bg = window.themeBg();
     if (portrait) {
       // Phone held upright → the vertical boufiya order queue, full-screen.

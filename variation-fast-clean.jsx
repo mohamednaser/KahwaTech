@@ -1,21 +1,9 @@
 // ───────────────────────────────────────────────────────────────
 // Variation B v2 — الكاش السريع (نظيف)
-// One accent color · light cream/white background · Tajawal only.
-// Same logic as v1 but stripped of decorative noise.
-// Theme is driven by props (so a Tweak can flip palette presets).
+// Single fixed palette: sage (muted green) on a light background · Tajawal.
 // ───────────────────────────────────────────────────────────────
 
 const FAST_THEMES = {
-  cream: {
-    bg:      '#f5efe2',
-    surface: '#ffffff',
-    ink:     '#241a10',
-    inkSoft: '#7a6a52',
-    accent:  '#a85a2a',     // terracotta — single warm accent
-    accentInk:'#ffffff',
-    rule:    '#e6dcc5',
-    pillBg:  '#efe6d0',
-  },
   sage: {
     bg:      '#f4f4f0',
     surface: '#ffffff',
@@ -26,20 +14,10 @@ const FAST_THEMES = {
     rule:    '#e2e2dc',
     pillBg:  '#eaeae2',
   },
-  white: {
-    bg:      '#ffffff',
-    surface: '#fafafa',
-    ink:     '#161616',
-    inkSoft: '#6b6b6b',
-    accent:  '#1a3e6a',     // navy
-    accentInk:'#ffffff',
-    rule:    '#ececec',
-    pillBg:  '#f0f0f0',
-  },
 };
 
-function VariationFastClean({ buttonScale = 1, themeKey = 'cream', layout = 'list', W = 932, H = 430 }) {
-  const T = FAST_THEMES[themeKey] || FAST_THEMES.cream;
+function VariationFastClean({ buttonScale = 1, themeKey = 'sage', layout = 'list', W = 932, H = 430 }) {
+  const T = FAST_THEMES[themeKey] || FAST_THEMES.sage;
   const [cart, setCart] = React.useState([
     { id:'ahwa', mod:'مظبوط', qty:3 },
     { id:'shay-nana', mod:null, qty:2 },

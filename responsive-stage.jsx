@@ -74,11 +74,10 @@ function PhoneStage({ maxWidth = 560, bg = '#f4f4f0', children }) {
   );
 }
 
-// Resolves the active theme's background so the fit margins blend with the app.
+// Background that matches the app, so any fit margins blend in.
 function themeBg() {
-  const key = (window.KahwaTheme && window.KahwaTheme.get()) || 'sage';
   const themes = window.FAST_THEMES || {};
-  return (themes[key] || themes.sage || { bg: '#f4f4f0' }).bg;
+  return (themes.sage || { bg: '#f4f4f0' }).bg;
 }
 
 Object.assign(window, { useViewport, useIsPortrait, FitStage, PhoneStage, themeBg });
