@@ -2,21 +2,36 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<title>KahwaTech · شاشات الموبايل (طولي)</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KahwaTech · الموبايل</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#3a6a48">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%233a6a48'/%3E%3Ctext x='50' y='72' font-family='system-ui,sans-serif' font-size='64' font-weight='900' fill='%23fff' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<script src="theme-control.js"></script>
+<script>
+  // Components resolve their palette once at load, so re-theme via a reload.
+  window.addEventListener('kahwa:theme', function () { location.reload(); });
+</script>
 <style>
-  html, body {
-    margin: 0; padding: 0; height: 100%;
-    font-family: "Tajawal", system-ui, sans-serif;
-    background: #ecebe6; color: #1a1410;
-    overscroll-behavior: none;
-  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; width: 100%; height: 100%;
+    font-family: "Tajawal", system-ui, sans-serif; background: #ecebe6;
+    color: #1a1410; overscroll-behavior: none; }
   #root { width: 100%; height: 100%; }
-  /* Inner screen scrollbars hidden so the phone frame looks clean */
-  .kahwa-phone-inner ::-webkit-scrollbar { width: 0; height: 0; }
+  ::-webkit-scrollbar { width: 0; height: 0; }
+  /* Screen toggle pill (bottom-right; theme switcher sits bottom-left). */
+  .mob-switch { position: fixed; right: 16px; bottom: 16px; z-index: 2147483645;
+    display: flex; gap: 3px; padding: 3px; border-radius: 999px;
+    background: rgba(255,255,255,.82); -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%); border: 1px solid rgba(20,12,5,.10);
+    box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 10px 30px -12px rgba(20,12,5,.35); }
+  .mob-switch button { appearance: none; border: 0; cursor: pointer; padding: 7px 16px;
+    border-radius: 999px; background: transparent; color: #4a4036;
+    font-family: inherit; font-size: 13px; font-weight: 700; line-height: 1; transition: all .18s ease; }
+  .mob-switch button[aria-pressed="true"] { background: #fff; color: #1a1410;
+    box-shadow: 0 1px 2px rgba(20,12,5,.18); }
 </style>
 </head>
 <body>
@@ -29,44 +44,26 @@
 <script src="menu-data.js"></script>
 <script type="text/babel" src="item-photo.jsx"></script>
 <script type="text/babel" src="past-orders.jsx"></script>
-<script type="text/babel" src="ios-frame.jsx"></script>
+<script type="text/babel" src="variation-fast-clean.jsx"></script>
 <script type="text/babel" src="mobile-screens.jsx"></script>
-<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="responsive-stage.jsx"></script>
 
 <script type="text/babel" data-presets="react">
-  // Phone frame wrapper — IOSDevice gives us the bezel + status bar + home indicator.
-  // We override its inner container to fill 100% height with our app, and disable
-  // its default scroll so each screen handles its own scrolling.
-  function Phone({ children }) {
-    return (
-      <div className="kahwa-phone-inner" style={{ width: 402, height: 874, position:'relative' }}>
-        <window.IOSDevice width={402} height={874}>
-          <div style={{ width: '100%', height: '100%', position:'relative' }}>
-            {children}
-          </div>
-        </window.IOSDevice>
-      </div>
-    );
-  }
-
   function App() {
+    const [screen, setScreen] = React.useState('waiter');
+    const bg = window.themeBg();
     return (
-      <window.DesignCanvas initialZoom={0.55}>
-        <window.DCSection id="mobile-screens"
-          title="KahwaTech · شاشات الموبايل (طولي)"
-          subtitle="iPhone 16 Pro · 402×874 · iOS frame + Tajawal · نفس النظام البصري لشاشة التابلت">
-          <window.DCArtboard id="waiter" label="A · الموظف (المنيو + السلة + الأوردرات السابقة)" width={420} height={894}>
-            <div data-screen-label="A · Waiter Mobile" style={{ padding: 9 }}>
-              <Phone><window.KahwaWaiterMobile /></Phone>
-            </div>
-          </window.DCArtboard>
-          <window.DCArtboard id="boufiya" label="B · البوفية (الأوردرات)" width={420} height={894}>
-            <div data-screen-label="B · Boufiya Mobile" style={{ padding: 9 }}>
-              <Phone><window.KahwaBoufiyaMobile /></Phone>
-            </div>
-          </window.DCArtboard>
-        </window.DCSection>
-      </window.DesignCanvas>
+      <>
+        <window.FitStage dw={402} dh={874} bg={bg}>
+          {screen === 'waiter' ? <window.KahwaWaiterMobile /> : <window.KahwaBoufiyaMobile />}
+        </window.FitStage>
+        <div className="mob-switch" role="group" aria-label="اختيار الشاشة">
+          <button type="button" aria-pressed={screen === 'waiter'}
+                  onClick={() => setScreen('waiter')}>الموظف</button>
+          <button type="button" aria-pressed={screen === 'boufiya'}
+                  onClick={() => setScreen('boufiya')}>البوفية</button>
+        </div>
+      </>
     );
   }
   ReactDOM.createRoot(document.getElementById('root')).render(<App />);

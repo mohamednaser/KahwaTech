@@ -1,7 +1,9 @@
 // Shared owner-dashboard primitives — KPI card, bar chart, list rows.
-// Theme reuses MOB_T from mobile-screens.jsx if available, else FAST_THEMES.sage.
+// Theme follows the viewer's saved choice (theme-control.js) via FAST_THEMES,
+// falling back to sage when neither is available.
 
-const OWNER_T = (window.FAST_THEMES && window.FAST_THEMES.sage) || {
+const __ownerThemeKey = (window.KahwaTheme && window.KahwaTheme.get()) || 'sage';
+const OWNER_T = (window.FAST_THEMES && (window.FAST_THEMES[__ownerThemeKey] || window.FAST_THEMES.sage)) || {
   bg:'#f4f4f0', surface:'#fff', ink:'#1a1a14', inkSoft:'#7a7a6a',
   accent:'#3a6a48', accentInk:'#fff', rule:'#e2e2dc', pillBg:'#eaeae2',
 };
