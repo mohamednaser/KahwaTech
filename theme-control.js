@@ -84,6 +84,9 @@
     + '.kt-theme button span.kt-name{display:none}.kt-theme button{padding:6px}}';
 
   function build() {
+    // Screens opt out of the floating widget (they fill the viewport and read
+    // the saved theme on load); the launcher keeps it for picking.
+    if (window.__KAHWA_NO_THEME_WIDGET) return;
     if (document.querySelector('.kt-theme')) return;
     var style = document.createElement('style');
     style.textContent = STYLE;

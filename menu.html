@@ -9,11 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<script>window.__KAHWA_NO_THEME_WIDGET = true;</script>
 <script src="theme-control.js"></script>
-<script>
-  // Components resolve their palette once at load, so re-theme via a reload.
-  window.addEventListener('kahwa:theme', function () { location.reload(); });
-</script>
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; width: 100%; height: 100%;
@@ -43,11 +40,12 @@
     const theme = (window.KahwaTheme && window.KahwaTheme.get()) || 'sage';
     const bg = window.themeBg();
     if (portrait) {
-      // Phone held upright → the purpose-built vertical waiter screen.
+      // Phone held upright → the purpose-built vertical waiter screen,
+      // filling the whole viewport (no letterbox).
       return (
-        <window.FitStage dw={402} dh={874} bg={bg}>
+        <window.PhoneStage bg={bg}>
           <window.KahwaWaiterMobile />
-        </window.FitStage>
+        </window.PhoneStage>
       );
     }
     // Desktop / tablet landscape → the wide POS layout, filling the screen.

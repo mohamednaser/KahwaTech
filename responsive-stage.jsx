@@ -57,6 +57,23 @@ function FitStage({ dw, dh, bg = '#ecebe6', maxScale = Infinity, children }) {
   );
 }
 
+// Fills the whole viewport with a fluid phone-width column (no letterboxing).
+// The portrait screens are built with width/height:100%, so they stretch to
+// fill this box exactly — full-screen on a phone, a centered phone column on
+// wider windows. `maxWidth` keeps it phone-shaped on tablets/desktops.
+function PhoneStage({ maxWidth = 560, bg = '#f4f4f0', children }) {
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, background: bg, overflow: 'hidden',
+      display: 'flex', justifyContent: 'center',
+    }}>
+      <div style={{ width: '100%', maxWidth, height: '100%', position: 'relative', overflow: 'hidden' }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
 // Resolves the active theme's background so the fit margins blend with the app.
 function themeBg() {
   const key = (window.KahwaTheme && window.KahwaTheme.get()) || 'sage';
@@ -64,4 +81,4 @@ function themeBg() {
   return (themes[key] || themes.sage || { bg: '#f4f4f0' }).bg;
 }
 
-Object.assign(window, { useViewport, useIsPortrait, FitStage, themeBg });
+Object.assign(window, { useViewport, useIsPortrait, FitStage, PhoneStage, themeBg });
