@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <title>KahwaTech · الديمو</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="ديمو KahwaTech — نظام مقهى متكامل: شاشة البوفية للطلبات السريعة، المنيو الكبير للزبون، ولوحة إدارة لصاحب القهوة. كل شيء يشتغل محلياً بدون سيرفر.">
+<meta name="theme-color" content="#3a6a48">
+<meta property="og:title" content="KahwaTech · الديمو">
+<meta property="og:description" content="نظام مقهى متكامل — بوفية، منيو، وإدارة. ديمو يشتغل محلياً بدون سيرفر.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%233a6a48'/%3E%3Ctext x='50' y='72' font-family='system-ui,sans-serif' font-size='64' font-weight='900' fill='%23fff' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -159,7 +165,7 @@
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
     gap: 18px;
   }
   @media (max-width: 880px) {
@@ -298,6 +304,8 @@
   .tile.boufiya .visual { background: linear-gradient(135deg, #2a5236, #3a6a48); }
   .tile.menu    .visual { background: var(--cream); }
   .tile.admin   .visual { background: #1a1410; }
+  .tile.mobile  .visual { background: linear-gradient(135deg, #3a6a48, #2a5236); }
+  .tile.full    .visual { background: linear-gradient(135deg, #241612, #0f0a07); }
 
   /* ====== visuals (mini illustrations, no fake content) ====== */
   /* BOUFIYA — counter/POS tiles */
@@ -376,6 +384,63 @@
     font-weight: 700;
     font-family: "Tajawal", sans-serif;
   }
+
+  /* MOBILE — two phone silhouettes */
+  .vis-mobile {
+    position: absolute; inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 14px;
+    padding: 18px 0 0;
+  }
+  .vis-mobile .ph {
+    width: 52px; height: 104px;
+    border-radius: 12px 12px 0 0;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-bottom: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .vis-mobile .ph::before {
+    content: '';
+    position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+    width: 18px; height: 4px; border-radius: 999px;
+    background: rgba(255,255,255,0.3);
+  }
+  .vis-mobile .ph::after {
+    content: '';
+    position: absolute; left: 8px; right: 8px; top: 22px; bottom: 10px;
+    border-radius: 6px;
+    background: repeating-linear-gradient(
+      180deg, rgba(255,255,255,0.16) 0 6px, transparent 6px 14px);
+  }
+  .vis-mobile .ph.front { background: rgba(255,255,255,0.92); border-color: rgba(255,255,255,0.4); }
+  .vis-mobile .ph.front::after { background: repeating-linear-gradient(180deg, rgba(58,106,72,0.4) 0 6px, transparent 6px 14px); }
+
+  /* FULL — board of menu cards */
+  .vis-full {
+    position: absolute; inset: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 8px;
+    padding: 14px;
+  }
+  .vis-full div {
+    border-radius: 9px;
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.2);
+    position: relative;
+  }
+  .vis-full div::after {
+    content: '';
+    position: absolute; left: 7px; bottom: 7px;
+    width: 50%; height: 4px; border-radius: 999px;
+    background: rgba(255,255,255,0.45);
+  }
+  .vis-full div:nth-child(2) { background: rgba(255,255,255,0.9); }
 
   /* ============ FOOTER ============ */
   footer.foot {
@@ -486,7 +551,7 @@
       <section class="grid">
 
         <!-- 01 — BOUFIYA -->
-        <a class="tile boufiya" href="KahwaTech Boufiya.html">
+        <a class="tile boufiya" href="boufiya.html">
           <div class="hotkey">1</div>
           <div class="row" style="margin-right: 36px;">
             <span class="idx">01 / SCREEN</span>
@@ -512,7 +577,7 @@
         </a>
 
         <!-- 02 — MENU -->
-        <a class="tile menu" href="KahwaTech Menu v2.html">
+        <a class="tile menu" href="menu.html">
           <div class="hotkey">2</div>
           <div class="row" style="margin-right: 36px;">
             <span class="idx">02 / SCREEN</span>
@@ -548,7 +613,7 @@
         </a>
 
         <!-- 03 — ADMIN -->
-        <a class="tile admin" href="KahwaTech Owner.html">
+        <a class="tile admin" href="owner.html">
           <div class="hotkey">3</div>
           <div class="row" style="margin-right: 36px;">
             <span class="idx">03 / SCREEN</span>
@@ -584,6 +649,58 @@
           </footer>
         </a>
 
+        <!-- 04 — MOBILE -->
+        <a class="tile mobile" href="mobile.html">
+          <div class="hotkey">4</div>
+          <div class="row" style="margin-right: 36px;">
+            <span class="idx">04 / SCREEN</span>
+            <span class="ar">للموبايل</span>
+          </div>
+          <div class="visual">
+            <div class="vis-mobile">
+              <div class="ph"></div>
+              <div class="ph front"></div>
+            </div>
+          </div>
+          <h2>الموبايل <span class="en">MOBILE</span></h2>
+          <p>نسخة طولية للموظف والبوفية على الجوال — المنيو، السلة، والأوردرات السابقة في إطار iPhone.</p>
+          <footer>
+            <div class="tags">
+              <span>iphone</span><span>portrait</span><span>402×874</span>
+            </div>
+            <div class="go">
+              <span>فتح</span>
+              <span class="arrow">←</span>
+            </div>
+          </footer>
+        </a>
+
+        <!-- 05 — FULL MENU -->
+        <a class="tile full" href="menu-standalone.html">
+          <div class="hotkey">5</div>
+          <div class="row" style="margin-right: 36px;">
+            <span class="idx">05 / SCREEN</span>
+            <span class="ar">نسخة مستقلة</span>
+          </div>
+          <div class="visual">
+            <div class="vis-full">
+              <div></div><div></div><div></div>
+              <div></div><div></div><div></div>
+            </div>
+          </div>
+          <h2>المنيو الكامل <span class="en">FULL</span></h2>
+          <p>نسخة المنيو المستقلة — ملف واحد بكل شيء بداخله، يشتغل بدون إنترنت. مناسبة للعرض أو المشاركة.</p>
+          <footer>
+            <div class="tags">
+              <span>standalone</span><span>offline</span><span>single-file</span>
+            </div>
+            <div class="go">
+              <span>فتح</span>
+              <span class="arrow">←</span>
+            </div>
+          </footer>
+        </a>
+
       </section>
     </main>
 
@@ -593,7 +710,7 @@
         KahwaTech · ديمو غير مرتبط بقاعدة بيانات حقيقية
       </div>
       <div class="hint">
-        press <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> to open · all data is fake
+        press <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd> <kbd>5</kbd> to open · all data is fake
       </div>
     </footer>
   </div>
@@ -601,9 +718,11 @@
   <script>
     // hotkeys 1 / 2 / 3 navigate to each tile
     const map = {
-      '1': 'KahwaTech Boufiya.html',
-      '2': 'KahwaTech Menu v2.html',
-      '3': 'KahwaTech Owner.html',
+      '1': 'boufiya.html',
+      '2': 'menu.html',
+      '3': 'owner.html',
+      '4': 'mobile.html',
+      '5': 'menu-standalone.html',
     };
     document.addEventListener('keydown', (e) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
