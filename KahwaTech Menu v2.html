@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>KahwaTech · شاشة المنيو (الكاش السريع)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    font-family: "Tajawal", system-ui, sans-serif;
+    background: #ecebe6;
+    color: #1a1410;
+  }
+  #stage {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    box-sizing: border-box;
+  }
+  .frame {
+    width: 932px; height: 430px;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow:
+      0 30px 80px -20px rgba(20,12,5,0.35),
+      0 8px 24px -6px rgba(20,12,5,0.18),
+      0 0 0 1px rgba(20,12,5,0.06);
+    position: relative;
+    background: #fff;
+  }
+  .frame::before {
+    /* subtle device bezel */
+    content: '';
+    position: absolute; inset: -6px;
+    border-radius: 32px;
+    background: linear-gradient(180deg, #1d1410, #0a0604);
+    z-index: -1;
+  }
+  .caption {
+    position: absolute;
+    top: 24px; left: 50%; transform: translateX(-50%);
+    font-size: 12px; color: #6b6258; letter-spacing: 0.04em;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+<template id="__bundler_thumbnail" data-bg-color="#ecebe6">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <!-- K logo block -->
+    <rect x="500" y="280" width="200" height="200" rx="40" fill="#3a6a48"/>
+    <text x="600" y="425" font-family="system-ui" font-weight="900" font-size="160" fill="#fff" text-anchor="middle">K</text>
+    <!-- Brand name -->
+    <text x="600" y="540" font-family="Tajawal, system-ui" font-weight="800" font-size="46" fill="#241612" text-anchor="middle">KahwaTech</text>
+    <text x="600" y="580" font-family="Tajawal, system-ui" font-weight="500" font-size="22" fill="#7a6a52" text-anchor="middle">شاشة المنيو</text>
+  </svg>
+</template>
+<div class="caption">KahwaTech · الكاش السريع · موبايل أفقي (932×430)</div>
+<div id="stage">
+  <div class="frame" id="frame"></div>
+</div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script src="menu-data.js"></script>
+<script type="text/babel" src="item-photo.jsx"></script>
+<script type="text/babel" src="past-orders.jsx"></script>
+<script type="text/babel" src="variation-fast-clean.jsx"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+
+<script>
+  window.__KAHWA_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "buttonScale": 1,
+    "theme": "sage",
+    "layout": "grid"
+  }/*EDITMODE-END*/;
+</script>
+
+<script type="text/babel" data-presets="react">
+  function KahwaApp() {
+    const [t, setTweak] = window.useTweaks(window.__KAHWA_DEFAULTS);
+
+    return (
+      <>
+        <window.VariationFastClean
+          buttonScale={t.buttonScale}
+          themeKey={t.theme}
+          layout={t.layout}
+        />
+
+        <window.TweaksPanel title="Tweaks">
+          <window.TweakSection label="عرض الأصناف">
+            <window.TweakRadio
+              label="التنسيق"
+              value={t.layout}
+              options={[
+                { label: 'صفوف', value: 'list' },
+                { label: 'Grid', value: 'grid' },
+              ]}
+              onChange={(v) => setTweak('layout', v)}
+            />
+          </window.TweakSection>
+          <window.TweakSection label="الستايل">
+            <window.TweakRadio
+              label="نسق الألوان"
+              value={t.theme}
+              options={[
+                { label: 'كريمي', value: 'cream' },
+                { label: 'رمادي', value: 'sage' },
+                { label: 'أبيض', value: 'white' },
+              ]}
+              onChange={(v) => setTweak('theme', v)}
+            />
+          </window.TweakSection>
+          <window.TweakSection label="حجم الأزرار">
+            <window.TweakSlider
+              label="مقياس"
+              value={Math.round(t.buttonScale * 100)}
+              min={80} max={140} step={5} unit="%"
+              onChange={(v) => setTweak('buttonScale', v / 100)}
+            />
+            <window.TweakButton label="موبايل (90%)" onClick={() => setTweak('buttonScale', 0.9)} secondary />
+            <window.TweakButton label="افتراضي (100%)" onClick={() => setTweak('buttonScale', 1.0)} secondary />
+            <window.TweakButton label="كاشير (120%)" onClick={() => setTweak('buttonScale', 1.2)} />
+          </window.TweakSection>
+        </window.TweaksPanel>
+      </>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('frame')).render(<KahwaApp />);
+</script>
+</body>
+</html>
