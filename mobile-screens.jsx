@@ -491,27 +491,47 @@ function KahwaBoufiyaMobile() {
         )}
         {orders.map((ord, oi) => {
           const age = Math.max(0, now - ord.startedAt);
-          const allDone = ord.items.every(it => it.done);
+          const total = ord.items.length;
+          const doneCount = ord.items.filter(it => it.done).length;
+          const allDone = doneCount === total;
           const ac = ageColor(age);
           const isFlash = flashNum === ord.num;
           return (
             <div key={ord.num} style={{
+              flexShrink: 0,
               background: isFlash ? MOB_T.accent : MOB_T.surface,
               border: `1px solid ${isFlash ? MOB_T.accent : (allDone ? MOB_T.accent : MOB_T.rule)}`,
               borderRadius: 16, overflow:'hidden',
               transition:'background 200ms, border-color 200ms, opacity 300ms, transform 200ms',
               opacity: isFlash ? 0.6 : 1,
               transform: isFlash ? 'scale(0.98)' : 'scale(1)',
-              boxShadow: allDone && !isFlash ? `0 0 0 2px ${MOB_T.accent}33` : 'none',
+              boxShadow: allDone && !isFlash
+                ? `0 0 0 2px ${MOB_T.accent}33, 0 2px 8px -2px ${MOB_T.accent}33`
+                : '0 1px 3px rgba(20,12,5,0.05)',
             }}>
+              {/* progress: how many items are ready */}
+              <div style={{ height: 3, background: isFlash ? '#ffffff33' : MOB_T.rule }}>
+                <div style={{
+                  height: '100%', width: `${(doneCount / total) * 100}%`,
+                  background: isFlash ? '#fff' : MOB_T.accent, transition: 'width 300ms ease',
+                }} />
+              </div>
               <div style={{
                 display:'flex', alignItems:'center', justifyContent:'space-between',
                 padding: '10px 14px',
                 borderBottom: `1px solid ${isFlash ? '#ffffff33' : MOB_T.rule}`,
               }}>
                 <div>
-                  <div style={{ fontSize: 17, fontWeight: 900, color: isFlash ? '#fff' : MOB_T.ink, fontFamily:'system-ui' }}>#{ord.num}</div>
-                  <div style={{ fontSize: 12, color: isFlash ? '#fff' : MOB_T.inkSoft, opacity: isFlash ? 0.8 : 1 }}>الموظف: {ord.employee}</div>
+                  <div style={{ display:'flex', alignItems:'center', gap: 8 }}>
+                    <span style={{ fontSize: 17, fontWeight: 900, color: isFlash ? '#fff' : MOB_T.ink, fontFamily:'system-ui' }}>#{ord.num}</span>
+                    <span style={{
+                      fontSize: 11, fontWeight: 800, fontFamily:'system-ui',
+                      color: isFlash ? '#fff' : (allDone ? MOB_T.accent : MOB_T.inkSoft),
+                      background: isFlash ? '#ffffff22' : (allDone ? `${MOB_T.accent}1a` : MOB_T.pillBg),
+                      padding:'2px 7px', borderRadius: 999,
+                    }}>{doneCount}/{total}</span>
+                  </div>
+                  <div style={{ fontSize: 12, color: isFlash ? '#fff' : MOB_T.inkSoft, opacity: isFlash ? 0.8 : 1, marginTop: 2 }}>الموظف: {ord.employee}</div>
                 </div>
                 <div style={{
                   display:'flex', alignItems:'center', gap: 6,
