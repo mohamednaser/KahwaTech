@@ -291,14 +291,16 @@ function ItemPhoto({ item, size = 64, style = {} }) {
   return (
     <div style={{
       width: s, height: s, borderRadius: s * 0.22,
-      background: `${accent}14`,
+      background: useImg ? 'transparent' : `${accent}14`,
       display:'flex', alignItems:'center', justifyContent:'center',
       flexShrink: 0, overflow:'hidden', ...style,
     }}>
       {useImg ? (
+        // Fill the tile; a square transparent icon fits perfectly, a non-square
+        // one is centre-cropped to the rounded square.
         <img src={iconSrc} alt={item.ar} draggable={false}
           onError={() => setImgError(true)}
-          style={{ width: s * 0.86, height: s * 0.86, objectFit:'contain', display:'block' }} />
+          style={{ width: s, height: s, objectFit:'cover', display:'block' }} />
       ) : (
         <svg width={s * 0.86} height={s * 0.86} viewBox="0 0 64 64" style={{ display:'block' }}>
           {glyph}

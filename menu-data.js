@@ -17,7 +17,7 @@ window.KAHWA_ITEMS = [
   // ── HOT ──
   { id: 'shay',  ar: 'شاي',         cat: 'hot',  price: 15,
     photo: 'radial-gradient(circle at 50% 38%, #8a1e0a 0%, #5a0c00 38%, #260400 70%), radial-gradient(circle at 50% 50%, #3d1a0a, #1a0a05)',
-    rim: '#c8a878', glyph: 'glass', accent: '#b9351a' },
+    rim: '#c8a878', glyph: 'glass', accent: '#b9351a', icon: 'icons/shay.jpg' },
   { id: 'shay-nana', ar: 'شاي بالنعناع', cat: 'hot', price: 18,
     photo: 'radial-gradient(circle at 50% 35%, #5e4f1a 0%, #3a3210 40%, #1c1808 75%)',
     rim: '#c8a878', glyph: 'glass', accent: '#7aa83a' },
@@ -44,7 +44,7 @@ window.KAHWA_ITEMS = [
   // ── COLD ──
   { id: 'pepsi', ar: 'بيبسي',       cat: 'cold', price: 20,
     photo: 'radial-gradient(circle at 50% 35%, #2a4ea8 0%, #0a1c4a 50%, #02061a 85%)',
-    rim: '#e8e8ea', glyph: 'can',  accent: '#2a4ea8' },
+    rim: '#e8e8ea', glyph: 'can',  accent: '#2a4ea8', icon: 'icons/pepsi.jpg' },
   { id: 'seven', ar: 'سفن أب',      cat: 'cold', price: 20,
     photo: 'radial-gradient(circle at 50% 35%, #4ea850 0%, #1a5a20 50%, #061a0a 85%)',
     rim: '#e8e8ea', glyph: 'can',  accent: '#4ea850' },
@@ -61,14 +61,14 @@ window.KAHWA_ITEMS = [
   // ── SHISHA ──
   { id: 'sh-tof', ar: 'شيشة تفاح',     cat: 'shisha', price: 60,
     photo: 'radial-gradient(circle at 50% 40%, #3a1f0a 0%, #1a0b03 55%, #050200 85%), radial-gradient(circle at 70% 25%, #c84a18, #6a1a08)',
-    rim: '#8a5a30', glyph: 'pipe', accent: '#c84a18',
+    rim: '#8a5a30', glyph: 'pipe', accent: '#c84a18', icon: 'icons/sh-tof.jpg',
     mods: ['تفاحتين','عنب','نعناع','ليمون'] },
   { id: 'sh-3nb', ar: 'شيشة عنب',      cat: 'shisha', price: 60,
     photo: 'radial-gradient(circle at 50% 40%, #3a1f0a 0%, #1a0b03 55%, #050200 85%), radial-gradient(circle at 70% 25%, #6a2a8a, #2a0a4a)',
-    rim: '#8a5a30', glyph: 'pipe', accent: '#6a2a8a' },
+    rim: '#8a5a30', glyph: 'pipe', accent: '#6a2a8a', icon: 'icons/sh-tof.jpg' },
   { id: 'sh-mix', ar: 'شيشة ميكس',     cat: 'shisha', price: 70,
     photo: 'radial-gradient(circle at 50% 40%, #3a1f0a 0%, #1a0b03 55%, #050200 85%), conic-gradient(from 0deg at 70% 25%, #c84a18, #6a2a8a, #4ea850, #c84a18)',
-    rim: '#8a5a30', glyph: 'pipe', accent: '#c84a18' },
+    rim: '#8a5a30', glyph: 'pipe', accent: '#c84a18', icon: 'icons/sh-tof.jpg' },
 
   // ── SNACKS ──
   { id: 'lib-ab', ar: 'لب أبيض',      cat: 'snacks', price: 10,
