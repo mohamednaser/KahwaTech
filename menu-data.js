@@ -33,13 +33,13 @@ window.KAHWA_ITEMS = [
     rim: '#c8a878', glyph: 'glass', accent: '#d8a020', icon: 'icons/helba.jpg' },
   { id: 'yansoon', ar: 'ينسون',     cat: 'hot',  price: 18,
     photo: 'radial-gradient(circle at 50% 38%, #c08a30 0%, #7a541a 45%, #2e1f08 78%)',
-    rim: '#c8a878', glyph: 'glass', accent: '#c08a30' },
+    rim: '#c8a878', glyph: 'glass', accent: '#c08a30', icon: 'icons/yansoon.jpg' },
   { id: 'sahlab', ar: 'سحلب',       cat: 'hot',  price: 30,
     photo: 'radial-gradient(circle at 50% 30%, #fff7e8 0%, #ead8b8 38%, #b89870 70%, #5a4828 90%)',
     rim: '#e8d4ad', glyph: 'mug',  accent: '#c89858', icon: 'icons/sahlab.jpg' },
   { id: 'hot-choco', ar: 'هوت شوكليت', cat: 'hot', price: 35,
     photo: 'radial-gradient(circle at 50% 32%, #f1d9a8 0%, #6b3a18 30%, #2a1408 65%, #0e0703 88%)',
-    rim: '#e8d4ad', glyph: 'mug',  accent: '#6b3a18' },
+    rim: '#e8d4ad', glyph: 'mug',  accent: '#6b3a18', icon: 'icons/hot-choco.jpg' },
 
   // ── COLD ──
   { id: 'pepsi', ar: 'بيبسي',       cat: 'cold', price: 20,
@@ -65,10 +65,10 @@ window.KAHWA_ITEMS = [
     mods: ['تفاحتين','عنب','نعناع','ليمون'] },
   { id: 'sh-3nb', ar: 'شيشة عنب',      cat: 'shisha', price: 60,
     photo: 'radial-gradient(circle at 50% 40%, #3a1f0a 0%, #1a0b03 55%, #050200 85%), radial-gradient(circle at 70% 25%, #6a2a8a, #2a0a4a)',
-    rim: '#8a5a30', glyph: 'pipe', accent: '#6a2a8a', icon: 'icons/sh-tof.jpg' },
+    rim: '#8a5a30', glyph: 'pipe', accent: '#6a2a8a', icon: 'icons/sh-3nb.jpg' },
   { id: 'sh-mix', ar: 'شيشة ميكس',     cat: 'shisha', price: 70,
     photo: 'radial-gradient(circle at 50% 40%, #3a1f0a 0%, #1a0b03 55%, #050200 85%), conic-gradient(from 0deg at 70% 25%, #c84a18, #6a2a8a, #4ea850, #c84a18)',
-    rim: '#8a5a30', glyph: 'pipe', accent: '#c84a18', icon: 'icons/sh-tof.jpg' },
+    rim: '#8a5a30', glyph: 'pipe', accent: '#c84a18', icon: 'icons/sh-mix.jpg' },
 
   // ── SNACKS ──
   { id: 'lib-ab', ar: 'لب أبيض',      cat: 'snacks', price: 10,
@@ -97,7 +97,7 @@ window.KAHWA_ICON_DIR = 'icons';
 
 // Items whose icon image already shows the name — hide duplicate text in the UI.
 window.KAHWA_LABELED_ICON_IDS = new Set([
-  'shay', 'ahwa', 'nescafe', 'helba', 'sahlab',
+  'shay', 'ahwa', 'nescafe', 'helba', 'yansoon', 'sahlab', 'hot-choco',
   'pepsi', 'seven', 'limon', 'tamr',
   'sh-tof', 'sh-3nb', 'sh-mix',
   'water-s', 'water-l',
