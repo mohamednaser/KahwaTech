@@ -72,12 +72,14 @@ function PastOrdersPanel({ T, buttonScale = 1, orders, onCancelItem, now }) {
                     display:'flex', alignItems:'center', gap: 6,
                     fontSize: 12, opacity: isCancelled ? 0.5 : 1,
                   }}>
-                    <window.ItemPhoto item={data} size={22} />
+                    <window.ItemPhoto item={data} size={window.KAHWA_SHOW_ITEM_NAME(data) ? 22 : 32} />
                     <div style={{
                       flex: 1, minWidth: 0,
                       textDecoration: isCancelled ? 'line-through' : 'none',
+                      display:'flex', alignItems:'center', gap: 6,
                     }}>
-                      <span style={{ fontWeight: 700, color: T.ink }}>×{it.qty} {data.ar}</span>
+                      <span style={{ fontWeight: 700, color: T.ink, fontFamily:'system-ui' }}>×{it.qty}</span>
+                      <window.ItemName item={data} style={{ fontWeight: 700, color: T.ink }} />
                       {it.mod && <span style={{ color: T.inkSoft, fontSize: 11 }}> · {it.mod}</span>}
                     </div>
                     <span style={{ fontSize: 10, fontWeight: 700, color: sMeta.fg, minWidth: 44, textAlign:'center' }}>

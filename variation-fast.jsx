@@ -125,9 +125,9 @@ function VariationFast({ buttonScale = 1, W = 932, H = 430 }) {
                 <div style={{
                   display:'flex', alignItems:'center', gap: 10, padding: 8,
                 }}>
-                  <window.ItemPhoto item={item} size={56} />
+                  <window.ItemPhoto item={item} size={window.KAHWA_SHOW_ITEM_NAME(item) ? 56 : 72} />
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontWeight: 800, fontSize: 17 * buttonScale, lineHeight: 1.1 }}>{item.ar}</div>
+                    <window.ItemName item={item} style={{ fontWeight: 800, fontSize: 17 * buttonScale, lineHeight: 1.1 }} />
                     <div style={{ fontSize: 12, color: fastTokens.inkSoft, marginTop: 2 }}>{item.price} ج.م</div>
                   </div>
                   {item.mods && item.mods.length ? (
@@ -209,9 +209,12 @@ function VariationFast({ buttonScale = 1, W = 932, H = 430 }) {
                     display:'flex', alignItems:'center', justifyContent:'center',
                     fontWeight: 900, fontSize: 11, color:'#000', fontFamily:'system-ui',
                   }}>×{row.qty}</div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 13, fontWeight: 800, lineHeight: 1.1 }}>{it.ar}</div>
-                    {row.mod && <div style={{ fontSize: 10, color: '#8a7a4a' }}>{row.mod}</div>}
+                  <div style={{ flex: 1, minWidth: 0, display:'flex', alignItems:'center', gap: 8 }}>
+                    <window.ItemPhoto item={it} size={window.KAHWA_SHOW_ITEM_NAME(it) ? 36 : 44} />
+                    <div>
+                      <window.ItemName item={it} style={{ fontSize: 13, fontWeight: 800, lineHeight: 1.1 }} />
+                      {row.mod && <div style={{ fontSize: 10, color: '#8a7a4a' }}>{row.mod}</div>}
+                    </div>
                   </div>
                   <div style={{ fontSize: 13, fontWeight: 800 }}>{it.price * row.qty}</div>
                   <button onClick={()=>incQty(i,+1)} style={miniBtn(buttonScale, fastTokens.accent2)}>+</button>

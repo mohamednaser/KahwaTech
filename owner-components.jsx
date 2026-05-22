@@ -103,7 +103,7 @@ function TopItemsList({ items, compact = false }) {
             }}>{i + 1}</div>
             <window.ItemPhoto item={data} size={compact ? 32 : 38} />
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: compact ? 13 : 14, fontWeight: 700, color: OWNER_T.ink, lineHeight: 1.1 }}>{data.ar}</div>
+              <window.ItemName item={data} style={{ fontSize: compact ? 13 : 14, fontWeight: 700, color: OWNER_T.ink, lineHeight: 1.1 }} />
               <div style={{ fontSize: 11, color: OWNER_T.inkSoft, marginTop: 1 }}>{row.qty} كوب</div>
             </div>
             <div style={{ textAlign:'left' }}>

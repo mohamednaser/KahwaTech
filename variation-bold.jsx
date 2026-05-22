@@ -122,11 +122,11 @@ function VariationBold({ buttonScale = 1, W = 932, H = 430 }) {
             display:'flex', flexDirection:'column', alignItems:'center',
             boxShadow: `0 16px 40px -12px rgba(0,0,0,0.7), 0 0 0 6px ${boldTokens.bg}`,
           }}>
-            <window.ItemPhoto item={item} size={130} style={{ borderRadius: 999, boxShadow:`0 0 0 4px ${boldTokens.gold}, 0 8px 22px -4px rgba(0,0,0,0.6)` }} />
-            <div style={{
+            <window.ItemPhoto item={item} size={window.KAHWA_SHOW_ITEM_NAME(item) ? 130 : 150} style={{ borderRadius: 999, boxShadow:`0 0 0 4px ${boldTokens.gold}, 0 8px 22px -4px rgba(0,0,0,0.6)` }} />
+            <window.ItemName item={item} style={{
               fontSize: 24 * Math.min(buttonScale, 1.3), fontWeight: 900,
               marginTop: 6, color: boldTokens.cream, lineHeight: 1,
-            }}>{item.ar}</div>
+            }} />
             <div style={{
               fontSize: 14, color: boldTokens.gold, fontWeight: 800, marginTop: 2,
             }}>{item.price} جنيه</div>
@@ -228,7 +228,7 @@ function VariationBold({ buttonScale = 1, W = 932, H = 430 }) {
                   display:'flex', alignItems:'center', justifyContent:'center',
                 }}>{row.qty}</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 13, fontWeight: 800, lineHeight: 1.1 }}>{it.ar}</div>
+                  <window.ItemName item={it} style={{ fontSize: 13, fontWeight: 800, lineHeight: 1.1 }} />
                   {row.mod && <div style={{ fontSize: 10, color: boldTokens.red, fontWeight: 700 }}>{row.mod}</div>}
                 </div>
                 <div style={{ fontSize: 13, fontWeight: 800 }}>{it.price * row.qty}</div>
@@ -279,11 +279,11 @@ function PeekCard({ item, side, onClick }) {
       [side === 'prev' ? 'marginRight' : 'marginLeft']: -28,
       transition:'opacity 200ms',
     }}>
-      <window.ItemPhoto item={item} size={70} style={{ borderRadius: 999, boxShadow:`0 0 0 2px ${boldTokens.gold}55` }} />
-      <div style={{
+      <window.ItemPhoto item={item} size={window.KAHWA_SHOW_ITEM_NAME(item) ? 70 : 82} style={{ borderRadius: 999, boxShadow:`0 0 0 2px ${boldTokens.gold}55` }} />
+      <window.ItemName item={item} style={{
         fontSize: 13, fontWeight: 800, color: boldTokens.cream,
         textAlign:'center', lineHeight: 1, fontFamily:'inherit',
-      }}>{item.ar}</div>
+      }} />
       <div style={{ fontSize: 11, color: boldTokens.gold, fontWeight: 800 }}>{item.price} ج</div>
     </button>
   );

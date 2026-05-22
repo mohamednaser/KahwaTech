@@ -257,8 +257,10 @@ function ItemPhoto({ item, size = 64, style = {} }) {
   // files in a folder and set window.KAHWA_ICON_DIR (e.g. 'icons') to use
   // `<dir>/<id>.png` for every item. If the file is missing or fails to
   // load we fall back to the CSS glyph below — so a partial set is fine.
-  const iconSrc = item.icon
-    || (window.KAHWA_ICON_DIR ? `${window.KAHWA_ICON_DIR}/${item.id}.png` : null);
+  const iconSrc = (window.KAHWA_ITEM_ICON && window.KAHWA_ITEM_ICON(item))
+    || item.icon
+    || (window.KAHWA_ICON_DIR ? `${window.KAHWA_ICON_DIR}/${item.id}.jpg` : null);
+  const labeledIcon = window.KAHWA_LABELED_ICON_IDS && window.KAHWA_LABELED_ICON_IDS.has(item.id);
   const [imgError, setImgError] = React.useState(false);
   React.useEffect(() => { setImgError(false); }, [iconSrc]);
 
@@ -288,19 +290,22 @@ function ItemPhoto({ item, size = 64, style = {} }) {
   }
 
   const useImg = iconSrc && !imgError;
+  const tileH = labeledIcon ? Math.round(s * 1.28) : s;
   return (
     <div style={{
-      width: s, height: s, borderRadius: s * 0.22,
+      width: s, height: tileH, borderRadius: labeledIcon ? s * 0.12 : s * 0.22,
       background: useImg ? 'transparent' : `${accent}14`,
       display:'flex', alignItems:'center', justifyContent:'center',
       flexShrink: 0, overflow:'hidden', ...style,
     }}>
       {useImg ? (
-        // Fill the tile; a square transparent icon fits perfectly, a non-square
-        // one is centre-cropped to the rounded square.
-        <img src={iconSrc} alt={item.ar} draggable={false}
+        <img src={iconSrc} alt="" draggable={false}
           onError={() => setImgError(true)}
-          style={{ width: s, height: s, objectFit:'cover', display:'block' }} />
+          style={{
+            width: s, height: tileH,
+            objectFit: labeledIcon ? 'contain' : 'cover',
+            display:'block',
+          }} />
       ) : (
         <svg width={s * 0.86} height={s * 0.86} viewBox="0 0 64 64" style={{ display:'block' }}>
           {glyph}
@@ -389,6 +394,13 @@ function ModVisual({ item, mod, size = 48 }) {
   );
 }
 
+// Renders the Arabic item name only when the icon does not already include it.
+function ItemName({ item, children, style = {} }) {
+  if (!item || (window.KAHWA_SHOW_ITEM_NAME && !window.KAHWA_SHOW_ITEM_NAME(item))) return null;
+  return <div style={style}>{children ?? item.ar}</div>;
+}
+
 window.ItemPhoto = ItemPhoto;
 window.ItemIcon = ItemPhoto;  // alias
+window.ItemName = ItemName;
 window.ModVisual = ModVisual;

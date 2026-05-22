@@ -115,11 +115,11 @@ function VariationBaladi({ buttonScale = 1, W = 932, H = 430 }) {
               boxShadow: baladiTokens.shadow, fontFamily:'inherit',
               transition:'transform 80ms',
             }}>
-              <window.ItemPhoto item={item} size={cardSize - 18} />
-              <div style={{
+              <window.ItemPhoto item={item} size={window.KAHWA_SHOW_ITEM_NAME(item) ? cardSize - 18 : cardSize - 4} />
+              <window.ItemName item={item} style={{
                 fontWeight: 800, fontSize: 14 * buttonScale, color: baladiTokens.ink,
                 lineHeight: 1.1, textAlign:'center', marginTop: 2,
-              }}>{item.ar}</div>
+              }} />
               <div style={{
                 fontSize: 11 * buttonScale, color: baladiTokens.terracotta, fontWeight: 800,
               }}>{item.price} ج</div>
@@ -158,9 +158,9 @@ function VariationBaladi({ buttonScale = 1, W = 932, H = 430 }) {
                 display:'flex', alignItems:'center', gap: 8,
                 background:'#3a2614', borderRadius: 12, padding: '6px 8px',
               }}>
-                <window.ItemPhoto item={it} size={42} />
+                <window.ItemPhoto item={it} size={window.KAHWA_SHOW_ITEM_NAME(it) ? 42 : 50} />
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 14, fontWeight: 800, lineHeight: 1.1 }}>{it.ar}</div>
+                  <window.ItemName item={it} style={{ fontSize: 14, fontWeight: 800, lineHeight: 1.1 }} />
                   {row.mod && <div style={{ fontSize: 11, color: baladiTokens.saffron, fontWeight: 600 }}>{row.mod}</div>}
                   <div style={{ fontSize: 11, opacity: 0.7 }}>{it.price * row.qty} ج</div>
                 </div>

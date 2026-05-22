@@ -220,12 +220,15 @@ function VariationBoufiya({ buttonScale = 1, themeKey = 'sage', W = 932, H = 430
                         flex: 1, minWidth: 0, textAlign:'right',
                         textDecoration: it.done ? 'line-through' : 'none',
                         opacity: it.done ? 0.5 : 1,
+                        display:'flex', alignItems:'center', gap: 6,
                       }}>
-                        <div style={{
+                        {!window.KAHWA_SHOW_ITEM_NAME(data) && <window.ItemPhoto item={data} size={36} />}
+                        <div>
+                        <window.ItemName item={data} style={{
                           fontSize: 13, fontWeight: 700,
                           color: isFlash ? T.accentInk : T.ink,
                           lineHeight: 1.1,
-                        }}>{data.ar}</div>
+                        }} />
                         {it.mod && (
                           <div style={{
                             fontSize: 10,
@@ -234,6 +237,7 @@ function VariationBoufiya({ buttonScale = 1, themeKey = 'sage', W = 932, H = 430
                             opacity: isFlash ? 0.85 : 1,
                           }}>{it.mod}</div>
                         )}
+                        </div>
                       </div>
                       {/* Check */}
                       <div style={{

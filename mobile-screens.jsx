@@ -47,9 +47,9 @@ function ModSheet({ item, onPick, onClose }) {
           background: MOB_T.rule, margin: '0 auto 12px',
         }} />
         <div style={{ display:'flex', alignItems:'center', gap: 10, marginBottom: 12 }}>
-          <window.ItemPhoto item={item} size={48} />
+          <window.ItemPhoto item={item} size={window.KAHWA_SHOW_ITEM_NAME(item) ? 48 : 64} />
           <div>
-            <div style={{ fontSize: 18, fontWeight: 800, color: MOB_T.ink, lineHeight: 1 }}>{item.ar}</div>
+            <window.ItemName item={item} style={{ fontSize: 18, fontWeight: 800, color: MOB_T.ink, lineHeight: 1 }} />
             <div style={{ fontSize: 12, color: MOB_T.inkSoft, marginTop: 2 }}>اختار التحضير</div>
           </div>
         </div>
@@ -122,9 +122,9 @@ function CartSheet({ cart, pastOrders, now, onClose, onChangeQty, onRemove, onCl
                     display:'flex', alignItems:'center', gap: 10, padding: 8,
                     background: MOB_T.bg, borderRadius: 12,
                   }}>
-                    <window.ItemPhoto item={it} size={44} />
+                    <window.ItemPhoto item={it} size={window.KAHWA_SHOW_ITEM_NAME(it) ? 44 : 52} />
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: 15, fontWeight: 700, color: MOB_T.ink, lineHeight: 1.1 }}>{it.ar}</div>
+                      <window.ItemName item={it} style={{ fontSize: 15, fontWeight: 700, color: MOB_T.ink, lineHeight: 1.1 }} />
                       {row.mod && <div style={{ fontSize: 12, color: MOB_T.accent, fontWeight: 700 }}>{row.mod}</div>}
                       <div style={{ fontSize: 12, color: MOB_T.inkSoft, marginTop: 2 }}>{it.price * row.qty} ج</div>
                     </div>
@@ -342,8 +342,8 @@ function KahwaWaiterMobile() {
               transition:'background 200ms, border-color 200ms, transform 120ms',
               transform: isFlash ? 'scale(0.97)' : 'scale(1)',
             }}>
-              <window.ItemPhoto item={item} size={92} />
-              <div style={{ fontWeight: 800, fontSize: 16, marginTop: 4, lineHeight: 1.1, textAlign:'center' }}>{item.ar}</div>
+              <window.ItemPhoto item={item} size={window.KAHWA_SHOW_ITEM_NAME(item) ? 92 : 108} />
+              <window.ItemName item={item} style={{ fontWeight: 800, fontSize: 16, marginTop: 4, lineHeight: 1.1, textAlign:'center' }} />
               <div style={{ fontSize: 13, color: isFlash ? '#fff' : MOB_T.inkSoft, opacity: isFlash ? 0.95 : 1, fontWeight: isFlash ? 800 : 400 }}>
                 {isFlash ? `✓ في السلة · ${inCart}` : `${item.price} ج`}
               </div>
@@ -568,7 +568,7 @@ function KahwaBoufiyaMobile() {
                         textDecoration: it.done ? 'line-through' : 'none',
                         opacity: it.done ? 0.5 : 1,
                       }}>
-                        <div style={{ fontSize: 15, fontWeight: 700, color: isFlash ? '#fff' : MOB_T.ink, lineHeight: 1.1 }}>{data.ar}</div>
+                        <window.ItemName item={data} style={{ fontSize: 15, fontWeight: 700, color: isFlash ? '#fff' : MOB_T.ink, lineHeight: 1.1 }} />
                         {it.mod && <div style={{ fontSize: 12, color: isFlash ? '#fff' : MOB_T.accent, fontWeight: 700, marginTop: 1 }}>{it.mod}</div>}
                       </div>
                       <div style={{

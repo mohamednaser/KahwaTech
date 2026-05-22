@@ -182,13 +182,13 @@ function VariationFastClean({ buttonScale = 1, themeKey = 'sage', layout = 'list
                   transform: isFlash ? 'scale(0.97)' : 'scale(1)',
                   color: isFlash ? T.accentInk : T.ink,
                 }}>
-                  <window.ItemPhoto item={item} size={62 * Math.min(buttonScale, 1.2)} />
-                  <div style={{
+                  <window.ItemPhoto item={item} size={(window.KAHWA_SHOW_ITEM_NAME(item) ? 62 : 88) * Math.min(buttonScale, 1.2)} />
+                  <window.ItemName item={item} style={{
                     fontWeight: 700, fontSize: 14 * buttonScale,
                     color: isFlash ? T.accentInk : T.ink,
                     marginTop: 2, lineHeight: 1.1, textAlign:'center',
                     transition:'color 200ms',
-                  }}>{item.ar}</div>
+                  }} />
                   <div style={{
                     fontSize: 12,
                     color: isFlash ? T.accentInk : T.inkSoft,
@@ -229,12 +229,12 @@ function VariationFastClean({ buttonScale = 1, themeKey = 'sage', layout = 'list
                 overflow:'hidden',
               }}>
                 <div style={{ display:'flex', alignItems:'center', gap: 12, padding: 8 }}>
-                  <window.ItemPhoto item={item} size={56} />
+                  <window.ItemPhoto item={item} size={window.KAHWA_SHOW_ITEM_NAME(item) ? 56 : 72} />
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{
+                    <window.ItemName item={item} style={{
                       fontWeight: 700, fontSize: 17 * buttonScale,
                       lineHeight: 1.1, color: T.ink,
-                    }}>{item.ar}</div>
+                    }} />
                     <div style={{ fontSize: 13, color: T.inkSoft, marginTop: 2 }}>{item.price} جنيه</div>
                   </div>
                   {hasMods ? (
@@ -360,9 +360,12 @@ function VariationFastClean({ buttonScale = 1, themeKey = 'sage', layout = 'list
                     display:'flex', alignItems:'center', justifyContent:'center',
                     fontFamily:'system-ui',
                   }}>×{row.qty}</div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 14, fontWeight: 700, lineHeight: 1.15, color: T.ink }}>{it.ar}</div>
-                    {row.mod && <div style={{ fontSize: 11, color: T.inkSoft }}>{row.mod}</div>}
+                  <div style={{ flex: 1, minWidth: 0, display:'flex', alignItems:'center', gap: 8 }}>
+                    <window.ItemPhoto item={it} size={window.KAHWA_SHOW_ITEM_NAME(it) ? 36 : 48} />
+                    <div>
+                      <window.ItemName item={it} style={{ fontSize: 14, fontWeight: 700, lineHeight: 1.15, color: T.ink }} />
+                      {row.mod && <div style={{ fontSize: 11, color: T.inkSoft }}>{row.mod}</div>}
+                    </div>
                   </div>
                   <div style={{ fontSize: 13, fontWeight: 700, color: T.ink }}>{it.price * row.qty}</div>
                   <div style={{ display:'flex', gap: 4 }}>
@@ -424,9 +427,9 @@ function VariationFastClean({ buttonScale = 1, themeKey = 'sage', layout = 'list
             boxShadow: '0 20px 60px -10px rgba(0,0,0,0.4)',
           }}>
             <div style={{ display:'flex', alignItems:'center', gap: 12, marginBottom: 12 }}>
-              <window.ItemPhoto item={modalItem} size={54} />
+              <window.ItemPhoto item={modalItem} size={window.KAHWA_SHOW_ITEM_NAME(modalItem) ? 72 : 54} />
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 20, fontWeight: 800, color: T.ink, lineHeight: 1.1 }}>{modalItem.ar}</div>
+                <window.ItemName item={modalItem} style={{ fontSize: 20, fontWeight: 800, color: T.ink, lineHeight: 1.1 }} />
                 <div style={{ fontSize: 13, color: T.inkSoft, marginTop: 2 }}>اختار التحضير</div>
               </div>
               <button onClick={()=>setModalItem(null)} style={{
