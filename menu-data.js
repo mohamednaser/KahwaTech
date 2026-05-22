@@ -47,7 +47,7 @@ window.KAHWA_ITEMS = [
     rim: '#e8e8ea', glyph: 'can',  accent: '#2a4ea8', icon: 'icons/pepsi.jpg' },
   { id: 'seven', ar: 'سفن أب',      cat: 'cold', price: 20,
     photo: 'radial-gradient(circle at 50% 35%, #4ea850 0%, #1a5a20 50%, #061a0a 85%)',
-    rim: '#e8e8ea', glyph: 'can',  accent: '#4ea850' },
+    rim: '#e8e8ea', glyph: 'can',  accent: '#4ea850', icon: 'icons/seven.jpg' },
   { id: 'limon', ar: 'ليمون',       cat: 'cold', price: 22,
     photo: 'radial-gradient(circle at 50% 30%, #f4e878 0%, #c8a830 45%, #6a4a10 80%)',
     rim: '#e8d4ad', glyph: 'glass', accent: '#c8a830' },
