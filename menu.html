@@ -34,7 +34,8 @@
 
 <script type="text/babel" data-presets="react">
   function App() {
-    const portrait = window.useIsPortrait();
+    const { w, h } = window.useViewport();
+    const portrait = h > w;
     const theme = 'sage';
     const bg = window.themeBg();
     if (portrait) {
@@ -46,11 +47,13 @@
         </window.PhoneStage>
       );
     }
-    // Desktop / tablet landscape → the wide POS layout, filling the screen.
+    // Desktop / tablet landscape → the wide POS layout filling the screen.
+    // buttonScale grows a little on big screens so it doesn't look sparse.
+    const scale = Math.max(1, Math.min(1.35, w / 1100));
     return (
-      <window.FitStage dw={932} dh={430} bg={bg} maxScale={1.7}>
-        <window.VariationFastClean buttonScale={1} themeKey={theme} layout="grid" />
-      </window.FitStage>
+      <div style={{ position:'fixed', inset:0, background: bg }}>
+        <window.VariationFastClean buttonScale={scale} themeKey={theme} layout="grid" W={w} H={h} />
+      </div>
     );
   }
   ReactDOM.createRoot(document.getElementById('root')).render(<App />);

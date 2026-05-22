@@ -99,9 +99,14 @@ function VariationFastClean({ buttonScale = 1, themeKey = 'sage', layout = 'list
     return s + (it?it.price*r.qty:0);
   }, 0);
 
+  // Responsive bits driven by the width passed in (the viewport width when
+  // rendered full-screen): fewer columns and a slimmer cart on narrow screens.
+  const cols = W < 700 ? 2 : 3;
+  const cartW = W < 900 ? 240 : 290;
+
   return (
     <div dir="rtl" style={{
-      width: W, height: H, background: T.bg, color: T.ink,
+      width:'100%', height:'100%', background: T.bg, color: T.ink,
       fontFamily: '"Tajawal", system-ui, sans-serif',
       display:'flex', flexDirection:'column', position:'relative', overflow:'hidden',
     }}>
@@ -154,9 +159,9 @@ function VariationFastClean({ buttonScale = 1, themeKey = 'sage', layout = 'list
         {layout === 'grid' ? (
           <div style={{
             flex: 1, display:'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gridAutoRows: 'min-content',
-            gap: 8, alignContent:'start', overflow:'hidden',
+            gridTemplateColumns: `repeat(${cols}, 1fr)`,
+            gridAutoRows: '1fr',
+            gap: 8, alignContent:'stretch', overflow:'hidden',
           }}>
             {items.slice(0, 6).map(item => {
               const hasMods = item.mods && item.mods.length;
@@ -285,7 +290,7 @@ function VariationFastClean({ buttonScale = 1, themeKey = 'sage', layout = 'list
 
         {/* Cart */}
         <div style={{
-          width: 290, background: T.surface,
+          width: cartW, background: T.surface,
           borderRadius: 14, padding: '10px 12px 12px',
           border: `1px solid ${T.rule}`,
           display:'flex', flexDirection:'column',
