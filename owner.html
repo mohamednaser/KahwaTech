@@ -46,11 +46,11 @@
         </window.PhoneStage>
       );
     }
-    // Desktop / laptop → the full analytics dashboard, filling the screen.
+    // Desktop / laptop → the fluid analytics dashboard, filling the viewport.
     return (
-      <window.FitStage dw={1180} dh={820} bg={bg} maxScale={1.5}>
-        <window.OwnerDashboardLandscape W={1180} H={820} />
-      </window.FitStage>
+      <div style={{ position:'fixed', inset:0, background: bg }}>
+        <window.OwnerDashboardLandscape />
+      </div>
     );
   }
   ReactDOM.createRoot(document.getElementById('root')).render(<App />);

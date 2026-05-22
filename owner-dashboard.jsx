@@ -76,37 +76,53 @@ function OwnerDashboardLandscape({ W = 1180, H = 820 }) {
   };
   const P = PERIODS[period];
 
+  // Responsive breakpoints driven by the live viewport width (undefined →
+  // wide desktop defaults). The dashboard fills the viewport fluidly.
+  const { w: vw } = window.useViewport();
+  const collapsed = vw < 920;                       // sidebar → icons only
+  const kpiCols   = vw < 720 ? 2 : 4;
+  const chartCols = vw < 980 ? '1fr' : '1.5fr 1fr';
+  const bottomCols = vw < 760 ? '1fr' : (vw < 1180 ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)');
+  const titleSize = vw < 980 ? 17 : 22;
+
   return (
     <div dir="rtl" style={{
-      width: W, height: H, background: T.bg, color: T.ink,
+      width:'100%', height:'100%', background: T.bg, color: T.ink,
       fontFamily: window.ownerFont, display:'flex', overflow:'hidden',
     }}>
-      {/* Sidebar */}
+      {/* Sidebar — collapses to icons on narrow widths */}
       <aside style={{
-        width: 220, background: T.surface,
+        width: collapsed ? 68 : 220, background: T.surface,
         borderInlineStart: `1px solid ${T.rule}`,
-        display:'flex', flexDirection:'column',
-        padding: '18px 14px',
+        display:'flex', flexDirection:'column', flexShrink: 0,
+        padding: collapsed ? '18px 10px' : '18px 14px',
+        transition: 'width 200ms ease',
       }}>
-        <div style={{ display:'flex', alignItems:'center', gap: 10, padding:'2px 4px 16px' }}>
+        <div style={{
+          display:'flex', alignItems:'center', gap: 10, padding:'2px 4px 16px',
+          justifyContent: collapsed ? 'center' : 'flex-start',
+        }}>
           <div style={{
-            width: 38, height: 38, borderRadius: 12,
+            width: 38, height: 38, borderRadius: 12, flexShrink: 0,
             background: T.accent, color:'#fff',
             display:'flex', alignItems:'center', justifyContent:'center',
             fontWeight: 900, fontSize: 18, fontFamily:'system-ui',
           }}>K</div>
-          <div style={{ lineHeight: 1.1 }}>
-            <div style={{ fontWeight: 900, fontSize: 16 }}>{d.cafe.name}</div>
-            <div style={{ fontSize: 11, color: T.inkSoft, marginTop: 2 }}>{d.cafe.branch}</div>
-          </div>
+          {!collapsed && (
+            <div style={{ lineHeight: 1.1 }}>
+              <div style={{ fontWeight: 900, fontSize: 16 }}>{d.cafe.name}</div>
+              <div style={{ fontSize: 11, color: T.inkSoft, marginTop: 2 }}>{d.cafe.branch}</div>
+            </div>
+          )}
         </div>
         <nav style={{ display:'flex', flexDirection:'column', gap: 2 }}>
           {NAV_ITEMS.map(it => {
             const on = it.id === active;
             return (
-              <button key={it.id} onClick={()=>setActive(it.id)} style={{
+              <button key={it.id} onClick={()=>setActive(it.id)} title={it.ar} style={{
                 display:'flex', alignItems:'center', gap: 10,
-                padding:'10px 12px', borderRadius: 10,
+                padding: collapsed ? '10px 0' : '10px 12px', borderRadius: 10,
+                justifyContent: collapsed ? 'center' : 'flex-start',
                 background: on ? T.bg : 'transparent',
                 color: on ? T.ink : T.inkSoft,
                 border:'none', cursor:'pointer',
@@ -114,7 +130,7 @@ function OwnerDashboardLandscape({ W = 1180, H = 820 }) {
                 textAlign:'right',
               }}>
                 <NavGlyph kind={it.glyph} color={on ? T.accent : T.inkSoft} size={18} />
-                <span style={{ flex: 1, textAlign:'right' }}>{it.ar}</span>
+                {!collapsed && <span style={{ flex: 1, textAlign:'right' }}>{it.ar}</span>}
               </button>
             );
           })}
@@ -123,18 +139,21 @@ function OwnerDashboardLandscape({ W = 1180, H = 820 }) {
         {/* Owner profile pin */}
         <div style={{
           display:'flex', alignItems:'center', gap: 10,
-          padding: '10px 8px', borderRadius: 12,
+          padding: collapsed ? '8px 0' : '10px 8px', borderRadius: 12,
+          justifyContent: collapsed ? 'center' : 'flex-start',
           background: T.bg, marginTop: 8,
         }}>
           <div style={{
             width: 36, height: 36, borderRadius: 999, background: T.ink, color:'#fff',
-            display:'flex', alignItems:'center', justifyContent:'center',
+            display:'flex', alignItems:'center', justifyContent:'center', flexShrink: 0,
             fontWeight: 900, fontSize: 15, fontFamily:'system-ui',
           }}>ر</div>
-          <div style={{ lineHeight: 1.1, minWidth: 0 }}>
-            <div style={{ fontWeight: 800, fontSize: 13 }}>{d.cafe.owner}</div>
-            <div style={{ fontSize: 10, color: T.inkSoft, marginTop: 1 }}>صاحب القهوة</div>
-          </div>
+          {!collapsed && (
+            <div style={{ lineHeight: 1.1, minWidth: 0 }}>
+              <div style={{ fontWeight: 800, fontSize: 13 }}>{d.cafe.owner}</div>
+              <div style={{ fontSize: 10, color: T.inkSoft, marginTop: 1 }}>صاحب القهوة</div>
+            </div>
+          )}
         </div>
       </aside>
 
@@ -142,18 +161,25 @@ function OwnerDashboardLandscape({ W = 1180, H = 820 }) {
       <main style={{ flex: 1, display:'flex', flexDirection:'column', minWidth: 0 }}>
         {/* Header */}
         <header style={{
-          display:'flex', alignItems:'center', justifyContent:'space-between',
-          padding:'14px 22px', borderBottom: `1px solid ${T.rule}`, background: T.surface,
+          display:'flex', alignItems:'center', justifyContent:'space-between', gap: 12,
+          padding: collapsed ? '12px 16px' : '14px 22px',
+          borderBottom: `1px solid ${T.rule}`, background: T.surface,
         }}>
-          <div>
-            <div style={{ fontSize: 22, fontWeight: 900, color: T.ink, letterSpacing:'-0.01em' }}>
+          <div style={{ minWidth: 0 }}>
+            <div style={{
+              fontSize: titleSize, fontWeight: 900, color: T.ink, letterSpacing:'-0.01em',
+              whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
+            }}>
               يومك الحلو يا {d.cafe.owner} 👋
             </div>
-            <div style={{ fontSize: 13, color: T.inkSoft, marginTop: 2 }}>
+            <div style={{
+              fontSize: 13, color: T.inkSoft, marginTop: 2,
+              whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
+            }}>
               نظرة سريعة على القهوة · {P.headerSub}
             </div>
           </div>
-          <div style={{ display:'flex', alignItems:'center', gap: 8 }}>
+          <div style={{ display:'flex', alignItems:'center', gap: 8, flexShrink: 0 }}>
             {['today','week','month'].map(k => {
               const on = k === period;
               return (
@@ -184,7 +210,7 @@ function OwnerDashboardLandscape({ W = 1180, H = 820 }) {
         {/* Content */}
         <div style={{ flex: 1, padding: 18, overflow:'auto', display:'flex', flexDirection:'column', gap: 14 }}>
           {/* KPIs row */}
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap: 12 }}>
+          <div style={{ display:'grid', gridTemplateColumns:`repeat(${kpiCols}, 1fr)`, gap: 12 }}>
             <window.KpiCard label="الإيراد" value={P.revenue} unit="ج" prev={P.revenuePrev} hint={P.hint} />
             <window.KpiCard label="عدد الأوردرات" value={P.orders} unit="أوردر" prev={P.ordersPrev} hint={P.hint} />
             <window.KpiCard label="متوسط وقت التنفيذ" value={Math.round(P.avgPrepSec/60*10)/10} unit="دقيقة" prev={P.avgPrepSecPrev/60} invertDelta hint={P.hint} />
@@ -192,7 +218,7 @@ function OwnerDashboardLandscape({ W = 1180, H = 820 }) {
           </div>
 
           {/* Charts row */}
-          <div style={{ display:'grid', gridTemplateColumns:'1.5fr 1fr', gap: 12 }}>
+          <div style={{ display:'grid', gridTemplateColumns: chartCols, gap: 12 }}>
             <window.Panel title={P.chartTitle} subtitle={P.chartSub}
               action={<div style={{ display:'flex', gap: 12, alignItems:'center', fontSize: 11, color: T.inkSoft }}>
                 <span style={{ display:'flex', alignItems:'center', gap: 4 }}>
@@ -211,7 +237,7 @@ function OwnerDashboardLandscape({ W = 1180, H = 820 }) {
           </div>
 
           {/* Bottom row */}
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap: 12, minHeight: 240 }}>
+          <div style={{ display:'grid', gridTemplateColumns: bottomCols, gap: 12 }}>
             <window.Panel title="الموظفين النهارده" subtitle={`${d.today.activeEmployees} شغّالين دلوقتي`}
               action={<button style={ownerLink(T)}>إدارة ←</button>}>
               <window.EmployeeList employees={d.employees} />
