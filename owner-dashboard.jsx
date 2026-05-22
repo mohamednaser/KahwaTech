@@ -42,6 +42,40 @@ function OwnerDashboardLandscape({ W = 1180, H = 820 }) {
   const d = window.OWNER_DATA;
   const [active, setActive] = React.useState('home');
 
+  // The period toggle drives the KPI cards and the sales chart.
+  const [period, setPeriod] = React.useState('today');
+  const PERIODS = {
+    today: {
+      label:'اليوم', headerSub:'اليوم · 14:32', hint:'عن إمبارح',
+      chartTitle:'مبيعات اليوم', chartSub:'بالساعة · من ٨ صباحاً · المتقطع = متوقع',
+      revenue:1840, revenuePrev:1610, orders:87, ordersPrev:78,
+      avgPrepSec:142, avgPrepSecPrev:168, cancel:3.1, cancelPrev:4.4,
+      chart: d.hourly,
+    },
+    week: {
+      label:'الأسبوع', headerSub:'آخر ٧ أيام', hint:'عن الأسبوع اللي فات',
+      chartTitle:'مبيعات الأسبوع', chartSub:'باليوم · آخر ٧ أيام · المتقطع = متوقع',
+      revenue:11680, revenuePrev:10240, orders:548, ordersPrev:511,
+      avgPrepSec:150, avgPrepSecPrev:171, cancel:3.4, cancelPrev:4.1,
+      chart: [
+        { h:'سبت', s:1620 }, { h:'حد', s:1740 }, { h:'اتنين', s:1510 },
+        { h:'تلات', s:1680 }, { h:'ربع', s:1920 }, { h:'خميس', s:2180 },
+        { h:'جمعة', s:1030, proj:true },
+      ],
+    },
+    month: {
+      label:'الشهر', headerSub:'آخر ٣٠ يوم', hint:'عن الشهر اللي فات',
+      chartTitle:'مبيعات الشهر', chartSub:'بالأسبوع · آخر ٤ أسابيع · المتقطع = متوقع',
+      revenue:49600, revenuePrev:44100, orders:2320, ordersPrev:2140,
+      avgPrepSec:155, avgPrepSecPrev:166, cancel:3.8, cancelPrev:4.6,
+      chart: [
+        { h:'أسبوع ١', s:11680 }, { h:'أسبوع ٢', s:12340 },
+        { h:'أسبوع ٣', s:13110 }, { h:'أسبوع ٤', s:12470, proj:true },
+      ],
+    },
+  };
+  const P = PERIODS[period];
+
   return (
     <div dir="rtl" style={{
       width: W, height: H, background: T.bg, color: T.ink,
@@ -116,13 +150,19 @@ function OwnerDashboardLandscape({ W = 1180, H = 820 }) {
               يومك الحلو يا {d.cafe.owner} 👋
             </div>
             <div style={{ fontSize: 13, color: T.inkSoft, marginTop: 2 }}>
-              نظرة سريعة على القهوة · اليوم · 14:32
+              نظرة سريعة على القهوة · {P.headerSub}
             </div>
           </div>
           <div style={{ display:'flex', alignItems:'center', gap: 8 }}>
-            <button style={ownerPill(T)}>اليوم</button>
-            <button style={{ ...ownerPill(T), background:'transparent', color: T.inkSoft }}>الأسبوع</button>
-            <button style={{ ...ownerPill(T), background:'transparent', color: T.inkSoft }}>الشهر</button>
+            {['today','week','month'].map(k => {
+              const on = k === period;
+              return (
+                <button key={k} onClick={()=>setPeriod(k)}
+                  style={on ? ownerPill(T) : { ...ownerPill(T), background:'transparent', color: T.inkSoft }}>
+                  {PERIODS[k].label}
+                </button>
+              );
+            })}
             <div style={{
               width: 38, height: 38, borderRadius: 999, background: T.bg,
               border:`1px solid ${T.rule}`, color: T.ink,
@@ -145,15 +185,15 @@ function OwnerDashboardLandscape({ W = 1180, H = 820 }) {
         <div style={{ flex: 1, padding: 18, overflow:'auto', display:'flex', flexDirection:'column', gap: 14 }}>
           {/* KPIs row */}
           <div style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap: 12 }}>
-            <window.KpiCard label="إيراد اليوم" value={d.today.revenue} unit="ج" prev={d.today.revenuePrev} />
-            <window.KpiCard label="عدد الأوردرات" value={d.today.orders} unit="أوردر" prev={d.today.ordersPrev} />
-            <window.KpiCard label="متوسط وقت التنفيذ" value={Math.round(d.today.avgPrepSec/60*10)/10} unit="دقيقة" prev={d.today.avgPrepSecPrev/60} invertDelta />
-            <window.KpiCard label="نسبة الإلغاء" value={d.today.cancelledPct} unit="%" prev={d.today.cancelledPctPrev} invertDelta formatPct />
+            <window.KpiCard label="الإيراد" value={P.revenue} unit="ج" prev={P.revenuePrev} hint={P.hint} />
+            <window.KpiCard label="عدد الأوردرات" value={P.orders} unit="أوردر" prev={P.ordersPrev} hint={P.hint} />
+            <window.KpiCard label="متوسط وقت التنفيذ" value={Math.round(P.avgPrepSec/60*10)/10} unit="دقيقة" prev={P.avgPrepSecPrev/60} invertDelta hint={P.hint} />
+            <window.KpiCard label="نسبة الإلغاء" value={P.cancel} unit="%" prev={P.cancelPrev} invertDelta formatPct hint={P.hint} />
           </div>
 
           {/* Charts row */}
           <div style={{ display:'grid', gridTemplateColumns:'1.5fr 1fr', gap: 12 }}>
-            <window.Panel title="مبيعات اليوم" subtitle="بالساعة · من ٨ صباحاً · المتقطع = متوقع"
+            <window.Panel title={P.chartTitle} subtitle={P.chartSub}
               action={<div style={{ display:'flex', gap: 12, alignItems:'center', fontSize: 11, color: T.inkSoft }}>
                 <span style={{ display:'flex', alignItems:'center', gap: 4 }}>
                   <span style={{ width: 10, height: 10, borderRadius: 3, background: T.accent }}/> فعلي
@@ -162,7 +202,7 @@ function OwnerDashboardLandscape({ W = 1180, H = 820 }) {
                   <span style={{ width: 10, height: 10, borderRadius: 3, background: T.rule, border:`1px dashed ${T.inkSoft}` }}/> متوقع
                 </span>
               </div>}>
-              <window.HourlyBars data={d.hourly} height={180} />
+              <window.HourlyBars data={P.chart} height={180} />
             </window.Panel>
             <window.Panel title="الأكثر مبيعاً" subtitle="اليوم · حسب الإيراد"
               action={<button style={ownerLink(T)}>الكل ←</button>}>
