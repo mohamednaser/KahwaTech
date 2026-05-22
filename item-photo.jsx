@@ -253,6 +253,15 @@ function ItemPhoto({ item, size = 64, style = {} }) {
   const kind = glyphFor(item);
   const hot = item.cat === 'hot';
 
+  // Optional real icon per item. Either set item.icon explicitly, or drop
+  // files in a folder and set window.KAHWA_ICON_DIR (e.g. 'icons') to use
+  // `<dir>/<id>.png` for every item. If the file is missing or fails to
+  // load we fall back to the CSS glyph below — so a partial set is fine.
+  const iconSrc = item.icon
+    || (window.KAHWA_ICON_DIR ? `${window.KAHWA_ICON_DIR}/${item.id}.png` : null);
+  const [imgError, setImgError] = React.useState(false);
+  React.useEffect(() => { setImgError(false); }, [iconSrc]);
+
   // Render the glyph
   let glyph;
   if (kind === 'glass')   glyph = <GlassIcon accent={accent} hot={hot} />;
@@ -278,16 +287,23 @@ function ItemPhoto({ item, size = 64, style = {} }) {
     glyph = <ShishaIcon accent={accent} flavor={flavor} />;
   }
 
+  const useImg = iconSrc && !imgError;
   return (
     <div style={{
       width: s, height: s, borderRadius: s * 0.22,
       background: `${accent}14`,
       display:'flex', alignItems:'center', justifyContent:'center',
-      flexShrink: 0, ...style,
+      flexShrink: 0, overflow:'hidden', ...style,
     }}>
-      <svg width={s * 0.86} height={s * 0.86} viewBox="0 0 64 64" style={{ display:'block' }}>
-        {glyph}
-      </svg>
+      {useImg ? (
+        <img src={iconSrc} alt={item.ar} draggable={false}
+          onError={() => setImgError(true)}
+          style={{ width: s * 0.86, height: s * 0.86, objectFit:'contain', display:'block' }} />
+      ) : (
+        <svg width={s * 0.86} height={s * 0.86} viewBox="0 0 64 64" style={{ display:'block' }}>
+          {glyph}
+        </svg>
+      )}
     </div>
   );
 }
